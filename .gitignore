@@ -13,3 +13,11 @@
 .externalNativeBuild
 .cxx
 local.properties
+gradle.properties
+com.floodsense.floodsense_java.BuildConfig
+app/build/generated/source/buildConfig/debug/com/floodsense/floodsense_java/BuildConfig.java
+com/floodsense/floodsense_java/BuildConfig.java
+com.floodsense.floodsense_java.test.BuildConfig
+app/build/generated/source/buildConfig/androidTest/debug/com/floodsense/floodsense_java/test/BuildConfig.java
+com/floodsense/floodsense_java/test/BuildConfig.java
+BuildConfig.java
