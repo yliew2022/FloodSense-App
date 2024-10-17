@@ -8,7 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:showDividers="middle"
+        android:divider="@drawable/empty_tall_divider"
         android:padding="16dp">
+
 
         <!-- Title -->
         <TextView
@@ -24,9 +27,34 @@
         <WebView
             android:id="@+id/grafana_dashboard"
             android:layout_width="match_parent"
-            android:layout_height="365dp"
+            android:layout_height="207dp"
             android:layout_marginTop="16dp" />
 
+
+        <FrameLayout
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_webview"
+            android:paddingStart="4dip"
+            android:paddingTop="1dip"
+            android:paddingEnd="1dip"
+            android:paddingBottom="10dip">
+
+
+            <TextView
+                android:id="@+id/tvRainIntensity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="  Rain Intensity: "
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </FrameLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
