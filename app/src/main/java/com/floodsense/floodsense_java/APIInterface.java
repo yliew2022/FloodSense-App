@@ -25,7 +25,7 @@ public interface APIInterface {
     @Headers({
             "Accept: application/csv",
             "Content-type: application/vnd.flux",
-            "Authorization: Token EDZaz6AiynCX1DAOgMyC0Bt_P_wMaaocSGVFqmEZFt4VCkPwECnorMcjzVNrmxPygTvfJVK8aPvJV9YNvQJ9jw=="
+
     })
 
     Call<String> queryRainIntensity(
