@@ -1,60 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <LinearLayout
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:showDividers="middle"
-        android:divider="@drawable/empty_tall_divider"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-
-        <!-- Title -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Metrics Dashboard"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
-        <!-- WebView for Grafana Dashboard -->
-        <WebView
-            android:id="@+id/grafana_dashboard"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="207dp"
-            android:layout_marginTop="16dp" />
-
-
-        <FrameLayout
-            android:layout_width="174dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_webview"
-            android:paddingStart="4dip"
-            android:paddingTop="1dip"
-            android:paddingEnd="1dip"
-            android:paddingBottom="10dip">
+            android:layout_height="match_parent"
+            android:divider="@drawable/empty_tall_divider"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:showDividers="middle">
 
 
             <TextView
-                android:id="@+id/tvRainIntensity"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="  Rain Intensity: "
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_gravity="center"
+                android:text="Metrics Dashboard"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
-        </FrameLayout>
-    </LinearLayout>
+            <WebView
+                android:id="@+id/grafana_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="207dp"
+                android:layout_marginTop="16dp" />
 
+
+            <FrameLayout
+                android:layout_width="153dp"
+                android:layout_height="79dp"
+                android:background="@drawable/rounded_webview"
+                android:padding="4dip">
+
+                <TextView
+                    android:id="@+id/tvRainIntensity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text=""
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="78dp"
+                    app:srcCompat="@drawable/screenshot_2024_10_19_134135_removebg_preview" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="153dp"
+                android:layout_height="79dp"
+                android:background="@drawable/rounded_webview"
+                android:padding="4dip">
+
+                <TextView
+                    android:id="@+id/tvHumidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text=""
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="78dp"
+                    app:srcCompat="@drawable/humidity_img_removebg_preview" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="153dp"
+                android:layout_height="79dp"
+                android:background="@drawable/rounded_webview"
+                android:padding="4dip">
+
+                <TextView
+                    android:id="@+id/tvTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text=""
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="78dp"
+                    app:srcCompat="@drawable/temp_icon_removebg_preview" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+        <FrameLayout
+            android:id="@+id/flFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

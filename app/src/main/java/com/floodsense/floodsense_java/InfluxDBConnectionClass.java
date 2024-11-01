@@ -65,8 +65,30 @@ public class InfluxDBConnectionClass {
     public void setUrl(String url) {
         this.url = url;
     }
-    public List<FluxTable> queryData(InfluxDBClient influxDBClient) {
-        String flux = "from(bucket:\"TomorrowApi\") |> range(start: -24h) |> filter(fn:(r) => r._measurement == \"weatherData\" and r._field == \"rainIntensity\")";
+    public List<FluxTable> queryIntensity(InfluxDBClient influxDBClient) {
+        String flux = "from(bucket:\"TomorrowApi\") |> range(start: -3m) |> filter(fn:(r) => r._measurement == \"weatherData\" and r._field == \"rainIntensity\")";
+        QueryApi queryApi = influxDBClient.getQueryApi();
+
+        try {
+            return queryApi.query(flux);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public List<FluxTable> queryHumidity(InfluxDBClient influxDBClient) {
+        String flux = "from(bucket:\"TomorrowApi\") |> range(start: -3m) |> filter(fn:(r) => r._measurement == \"weatherData\" and r._field == \"humidity\")";
+        QueryApi queryApi = influxDBClient.getQueryApi();
+
+        try {
+            return queryApi.query(flux);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public List<FluxTable> queryTemp(InfluxDBClient influxDBClient) {
+        String flux = "from(bucket:\"TomorrowApi\") |> range(start: -3m) |> filter(fn:(r) => r._measurement == \"weatherData\" and r._field == \"temperature\")";
         QueryApi queryApi = influxDBClient.getQueryApi();
 
         try {
