@@ -1,35 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next"
-            app:layout_constraintBottom_toTopOf="@id/textview_first"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:id="@+id/f_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center_horizontal">
 
-        <TextView
-            android:id="@+id/textview_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/lorem_ipsum"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_first" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+            <!-- Title Section -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text="Weather Dashboard"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
+            <!-- Grafana Dashboard WebView -->
+            <WebView
+                android:id="@+id/grafana_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="254dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_webview" />
+
+            <!-- Weather Information Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="16dp">
+
+                <!-- Rain Intensity Card -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/rounded_webview"
+                    android:padding="8dp">
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Rain Intensity"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white" />
+                    <TextView
+                        android:id="@+id/tvRainIntensity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="40dp"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="10dp"
+                        app:srcCompat="@drawable/screenshot_2024_10_19_134135_removebg_preview" />
+
+                </FrameLayout>
+
+                <!-- Humidity Card -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/rounded_webview"
+                    android:padding="8dp">
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Humidity"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white" />
+                    <TextView
+                        android:id="@+id/tvHumidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="40dp"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white" />
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="10dp"
+                        app:srcCompat="@drawable/humidity_img_removebg_preview" />
+
+                </FrameLayout>
+
+                <!-- Temperature Card -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_webview"
+                    android:padding="8dp">
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Temperature"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white" />
+                    <TextView
+                        android:id="@+id/tvTemperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="40dp"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="10dp"
+                        app:srcCompat="@drawable/temp_icon_removebg_preview" />
+
+                </FrameLayout>
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/leaflet"
+                android:layout_width="match_parent"
+                android:layout_height="270dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_webview" />
+        </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,10 +8,10 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/mapFragment"
+        android:id="@+id/thirdFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Test"
+        android:text="THIRD"
         android:textColor="#43a047"
         android:textSize="40sp"
         android:textStyle="italic|bold"
