@@ -66,7 +66,7 @@ public class InfluxDBConnectionClass {
         this.url = url;
     }
     public List<FluxTable> queryIntensity(InfluxDBClient influxDBClient) {
-        String flux = "from(bucket:\"TomorrowApi\") |> range(start: -3m) |> filter(fn:(r) => r._measurement == \"weatherData\" and r._field == \"rainIntensity\")";
+        String flux = "from(bucket:\"TomorrowApi\") |> range(start: -3m) |> filter(fn:(r) => r._measurement == \"weatherData\" and r._field == \"precipitationProbability\")";
         QueryApi queryApi = influxDBClient.getQueryApi();
 
         try {

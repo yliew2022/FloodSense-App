@@ -57,16 +57,6 @@ import java.io.*;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
-    //private static final String TAG = "InfluxDBRequest";
-    //private static final String ORG = "d7e9ec57dbaaad80";
-    //private String token = BuildConfig.API_KEY;
-    //private String bucket = "TomorrowApi";
-    //private String org = "FloodSense";
-    //private String url = "http://10.0.2.2:8086";
-    //private SwipeRefreshLayout swipeRefreshLayout;
-    //private TextView tvRainIntensity;
-    //private TextView tvHumidity;
-    //private TextView tvTemperature;
     BottomNavigationView bottomNavigationView;
 
 
@@ -80,24 +70,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.person);
 
-
-
-        // Initialize TextView
-        //tvRainIntensity = findViewById(R.id.tvRainIntensity);
-        //tvHumidity = findViewById(R.id.tvHumidity);
-        //tvTemperature = findViewById(R.id.tvTemperature);
-        //WebView leafletWebView = findViewById(R.id.leafletWebView);
-        //setupLeaflet(leafletWebView);
-
-
-        // WebView settings
-
     }
 
 
     FirstFragment firstFragment = new FirstFragment();
     SecondFragment secondFragment = new SecondFragment();
     ThirdFragment thirdFragment = new ThirdFragment();
+    FourthFragment fourthFragment = new FourthFragment();
 
     @Override
     public boolean
@@ -125,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         .replace(R.id.flFragment, thirdFragment)
                         .commit();
                 return true;
+
         }
         return false;
     }

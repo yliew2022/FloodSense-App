@@ -1,25 +1,24 @@
 package com.floodsense.floodsense_java;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.query.FluxRecord;
 import com.influxdb.query.FluxTable;
-
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -28,12 +27,10 @@ public class FirstFragment extends Fragment {
     private TextView tvRainIntensity;
     private TextView tvHumidity;
     private TextView tvTemperature;
-    private static final String TAG = "InfluxDBRequest";
-    private static final String ORG = "d7e9ec57dbaaad80";
-    private String token = BuildConfig.API_KEY;
-    private String bucket = "TomorrowApi";
-    private String org = "FloodSense";
-    private String url = "http://10.0.2.2:8086";
+    private String token = "";
+    private String bucket = "";
+    private String org = "";
+    private String url = "";
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -45,11 +42,10 @@ public class FirstFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //setContentView(R.layout.activity_main);
-        // Find views by ID within the fragment layout
         tvRainIntensity = view.findViewById(R.id.tvRainIntensity);
         tvHumidity = view.findViewById(R.id.tvHumidity);
         tvTemperature = view.findViewById(R.id.tvTemperature);
+
         WebView leaflet = view.findViewById(R.id.leaflet);
         setupLeaflet(leaflet);
 
@@ -73,9 +69,9 @@ public class FirstFragment extends Fragment {
             for (FluxTable fluxTable : rainTable) {
                 for (FluxRecord fluxRecord : fluxTable.getRecords()) {
                     rainIntensityData
-                            .append("\t\t\t\t\t\t\t\t\t\t\t")
+                            //.append("\t\t\t\t\t\t\t\t\t\t\t")
                             .append(fluxRecord.getValueByKey("_value"))
-                            .append("\n");
+                            .append("%");
                 }
             }
             List<FluxTable> humidityTable = inConn.queryHumidity(influxDBClient);
@@ -83,9 +79,9 @@ public class FirstFragment extends Fragment {
             for (FluxTable fluxTable : humidityTable) {
                 for (FluxRecord fluxRecord : fluxTable.getRecords()) {
                     humidityData
-                            .append("\t\t\t\t\t\t\t\t\t\t\t")
+                            //.append("\t\t\t\t\t\t\t\t\t\t\t")
                             .append(fluxRecord.getValueByKey("_value"))
-                            .append("\n");
+                            .append("%");
                 }
             }
             List<FluxTable> tempTable = inConn.queryTemp(influxDBClient);
@@ -93,13 +89,11 @@ public class FirstFragment extends Fragment {
             for (FluxTable fluxTable : tempTable) {
                 for (FluxRecord fluxRecord : fluxTable.getRecords()) {
                     tempData
-                            .append("\t\t\t\t\t\t\t\t\t\t\t")
+                            //.append("\t\t\t\t\t\t\t\t\t\t\t")
                             .append(fluxRecord.getValueByKey("_value"))
-                            .append("\n");
+                            .append("°C");
                 }
             }
-
-            // Update the TextView on the main thread
             requireActivity().runOnUiThread(() -> {
                 tvRainIntensity.setText(rainIntensityData.toString());
                 tvHumidity.setText(humidityData.toString());
@@ -110,7 +104,6 @@ public class FirstFragment extends Fragment {
         });
     }
 
-
     private void setupWebView(WebView grafanaWebView) {
         WebSettings settings = grafanaWebView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -118,7 +111,7 @@ public class FirstFragment extends Fragment {
         settings.setLoadsImagesAutomatically(true);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
 
-        String grafanaUrl = "https://10.0.2.2:443/public-dashboards/54dc7f900a30411abf01729bf741c92d?orgId=1&from=now-1m&to=now&refresh=auto";
+        String grafanaUrl = "";
         grafanaWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedSslError(WebView view, android.webkit.SslErrorHandler handler, android.net.http.SslError error) {
@@ -158,9 +151,10 @@ public class FirstFragment extends Fragment {
             for (FluxTable fluxTable : rainTable) {
                 for (FluxRecord fluxRecord : fluxTable.getRecords()) {
                     rainIntensityData
-                            .append("\t\t\t\t\t\t\t\t\t\t\t")
+                            //.append("\t\t\t\t\t\t\t\t\t\t\t")
                             .append(fluxRecord.getValueByKey("_value"))
-                            .append("\n");
+                            .append("%");
+                            //.append("\n");
                 }
             }
             List<FluxTable> humidityTable = inConn.queryHumidity(influxDBClient);
@@ -168,9 +162,9 @@ public class FirstFragment extends Fragment {
             for (FluxTable fluxTable : humidityTable) {
                 for (FluxRecord fluxRecord : fluxTable.getRecords()) {
                     humidityData
-                            .append("\t\t\t\t\t\t\t\t\t\t\t")
+                            //.append("\t\t\t\t\t\t\t\t\t\t\t")
                             .append(fluxRecord.getValueByKey("_value"))
-                            .append("\n");
+                            .append("%");
                 }
             }
             List<FluxTable> tempTable = inConn.queryTemp(influxDBClient);
@@ -178,9 +172,9 @@ public class FirstFragment extends Fragment {
             for (FluxTable fluxTable : tempTable) {
                 for (FluxRecord fluxRecord : fluxTable.getRecords()) {
                     tempData
-                            .append("\t\t\t\t\t\t\t\t\t\t\t")
+                            //.append("\t\t\t\t\t\t\t\t\t\t\t")
                             .append(fluxRecord.getValueByKey("_value"))
-                            .append("\n");
+                            .append("°C");
                 }
             }
 
