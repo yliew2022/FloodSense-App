@@ -1,60 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:showDividers="middle"
-        android:divider="@drawable/empty_tall_divider"
-        android:padding="16dp">
 
-
-        <!-- Title -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Metrics Dashboard"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
-        <!-- WebView for Grafana Dashboard -->
-        <WebView
-            android:id="@+id/grafana_dashboard"
-            android:layout_width="match_parent"
-            android:layout_height="207dp"
-            android:layout_marginTop="16dp" />
-
-
-        <FrameLayout
-            android:layout_width="174dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_webview"
-            android:paddingStart="4dip"
-            android:paddingTop="1dip"
-            android:paddingEnd="1dip"
-            android:paddingBottom="10dip">
-
-
-            <TextView
-                android:id="@+id/tvRainIntensity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="  Rain Intensity: "
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </FrameLayout>
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

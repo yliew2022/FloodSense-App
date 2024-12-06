@@ -2,20 +2,39 @@ package com.floodsense.floodsense_java;
 
 //import static com.floodsense.floodsense_java.APIClient.retrofit;
 
-import android.annotation.SuppressLint;
+
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
-import android.os.Bundle;
-import android.util.Log;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.floodsense.floodsense_java.databinding.ActivityMainBinding;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.influxdb.client.InfluxDBClient;
+import com.influxdb.query.FluxRecord;
+import com.influxdb.query.FluxTable;
+import java.util.List;
+import android.os.Bundle;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 
@@ -28,93 +47,93 @@ import com.floodsense.floodsense_java.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import com.influxdb.annotations.Column;
-import com.influxdb.annotations.Measurement;
-import com.influxdb.client.InfluxDBClient;
-import com.influxdb.client.QueryApi;
-import com.influxdb.query.FluxRecord;
-import com.influxdb.query.FluxTable;
-import java.util.List;
+import android.os.Bundle;
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import java.io.*;
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
-public class MainActivity extends AppCompatActivity {
+    BottomNavigationView bottomNavigationView;
 
-    private static final String TAG = "InfluxDBRequest";
-    private static final String ORG = "d7e9ec57dbaaad80";
-    private String token = BuildConfig.API_KEY;
-    private String bucket = "TomorrowApi";
-    private String org = "FloodSense";
-    private String url = "http://10.0.2.2:8086";
-
-    private TextView tvRainIntensity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize TextView
-        tvRainIntensity = findViewById(R.id.tvRainIntensity);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        // WebView settings
-        WebView grafanaWebView = findViewById(R.id.grafana_dashboard);
-        setupWebView(grafanaWebView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.person);
 
-        // Initialize InfluxDB connection
-        InfluxDBConnectionClass inConn = new InfluxDBConnectionClass();
-        InfluxDBClient influxDBClient = inConn.buildConnection(url, token, bucket, org);
-
-        // Execute the InfluxDB query in a background thread
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            List<FluxTable> tables = inConn.queryData(influxDBClient);
-
-            // Extract the rain intensity value from the query result
-            StringBuilder rainIntensityData = new StringBuilder();
-            for (FluxTable fluxTable : tables) {
-                for (FluxRecord fluxRecord : fluxTable.getRecords()) {
-                    rainIntensityData.append(fluxRecord.getValueByKey("_field"))
-                            .append(": ")
-                            .append(fluxRecord.getValueByKey("_value"))
-                            .append("\n");
-                }
-            }
-
-            // Update the TextView on the main thread
-            runOnUiThread(() -> {
-                tvRainIntensity.setText(rainIntensityData.toString());
-            });
-
-            influxDBClient.close(); // Close the connection
-        });
     }
 
-    private void setupWebView(WebView grafanaWebView) {
-        WebSettings settings = grafanaWebView.getSettings();
+
+    FirstFragment firstFragment = new FirstFragment();
+    SecondFragment secondFragment = new SecondFragment();
+    ThirdFragment thirdFragment = new ThirdFragment();
+    FourthFragment fourthFragment = new FourthFragment();
+
+    @Override
+    public boolean
+    onNavigationItemSelected(@NonNull MenuItem item)
+    {
+
+        switch (item.getItemId()) {
+            case R.id.person:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flFragment, firstFragment)
+                        .commit();
+                return true;
+
+            case R.id.home:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flFragment, secondFragment)
+                        .commit();
+                return true;
+
+            case R.id.settings:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flFragment, thirdFragment)
+                        .commit();
+                return true;
+
+        }
+        return false;
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flFragment, fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void setupLeaflet(WebView leafletWebView) {
+        WebSettings settings = leafletWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setLoadsImagesAutomatically(true);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
-
-        String grafanaUrl = "https://10.0.2.2:443/public-dashboards/54dc7f900a30411abf01729bf741c92d?orgId=1&from=now-1m&to=now&refresh=auto";
-        grafanaWebView.setWebViewClient(new WebViewClient() {
+        leafletWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedSslError(WebView view, android.webkit.SslErrorHandler handler, android.net.http.SslError error) {
                 handler.proceed();  // Ignore SSL certificate errors
             }
         });
-        grafanaWebView.loadUrl(grafanaUrl);
+
+        // Load the HTML file from the assets folder
+        leafletWebView.loadUrl("map.html");
     }
+
+
+
 }
+
